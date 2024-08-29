@@ -1,7 +1,6 @@
 #include "elementOS.h"
 
 bool INITIALIZE_DONE = false;
-bool MOTORCHECK = false;
 int PROGRAMFLAG = 0;
 
 void COMPETITIONINFO(const char* title){
@@ -142,6 +141,37 @@ void elementOS(void* cpt){
 
     eos::controller_button page_up(eos::R1);
     eos::controller_button page_down(eos::R2);
+
+    uint32_t lf_port; uint32_t lmf_port; uint32_t lmb_port; uint32_t lb_port;
+    uint32_t rf_port; uint32_t rmf_port; uint32_t rmb_port; uint32_t rb_port;
+    uint32_t imu_1_port; uint32_t imu_2_port;
+    uint32_t coder_x_tport; uint32_t coder_y_tport;
+
+    //读取端口
+    motor lf = motor(lf_port , ratio6_1 , true);
+    motor lmf = motor(lmf_port , ratio6_1 , false);
+    motor lmb = motor(lmb_port , ratio6_1 , false);
+    motor lb = motor(lb_port , ratio6_1 , true);
+    motor rf = motor(rf_port , ratio6_1 , false);
+    motor rmf = motor(rmf_port , ratio6_1 , true);
+    motor rmb = motor(rmb_port , ratio6_1 , true);
+    motor rb = motor(rb_port , ratio6_1 , false);
+    inertial inertial_1 = inertial(imu_1_port);
+    inertial inertial_2 = inertial(imu_2_port);
+    encoder encoderx = encoder(Brain.ThreeWirePort.A);
+    encoder encodery = encoder(Brain.ThreeWirePort.C);
+    LF = &lf;
+    LMF = &lmf;
+    LMB = &lmb;
+    LB = &lb;
+    RF = &rf;
+    RMF = &rmf;
+    RMB = &rmb;
+    RB = &rb;
+    Inertial_1 = &inertial_1;
+    Inertial_2 = &inertial_2;
+    encoderX = &encoderx;
+    encoderY = &encodery;
 
     while (true)//功能选择循环，两页
     {
@@ -365,6 +395,8 @@ void elementOS(void* cpt){
     case 5://port
         eos::ClearControllerScreen();
 
+        
+
         break;
     case 6://control
         eos::ClearControllerScreen();
@@ -379,16 +411,16 @@ void elementOS(void* cpt){
         eos::ClearControllerScreen();
         eos::ControllerPrint("检查接线..." , 1 , 2);
         bool installed_check_list[10] = {
-            LF.installed(),
-            LMF.installed(),
-            LMB.installed(),
-            LB.installed(),
-            RF.installed(),
-            RMF.installed(),
-            RMB.installed(),
-            RB.installed(),
-            Inertial_1.installed(),
-            Inertial_2.installed(),
+            LF->installed(),
+            LMF->installed(),
+            LMB->installed(),
+            LB->installed(),
+            RF->installed(),
+            RMF->installed(),
+            RMB->installed(),
+            RB->installed(),
+            Inertial_1->installed(),
+            Inertial_2->installed(),
         };
         for(int i = 0 ; i < 10 ; i++){
             if(installed_check_list[i] == 0){

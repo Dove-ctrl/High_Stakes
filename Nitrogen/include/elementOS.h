@@ -3,7 +3,6 @@
 #include "vex.h"
 
 extern bool INITIALIZE_DONE;
-extern bool MOTORCHECK;
 extern int PROGRAMFLAG;
 
 /// @brief elementOS主函数

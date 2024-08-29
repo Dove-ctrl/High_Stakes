@@ -16,24 +16,23 @@ const int TIMEOUT_WRRNING = 30;
 const int TEMPERATURE_WRRNING = 50;
 
 //---------------------------------------------------------------//
-
 extern brain Brain;
 extern controller Controller;
 
-extern motor LF;
-extern motor LMF;
-extern motor LMB;
-extern motor LB;
+extern motor* LF;
+extern motor* LMF;
+extern motor* LMB;
+extern motor* LB;
 
-extern motor RF;
-extern motor RMF;
-extern motor RMB;
-extern motor RB;
+extern motor* RF;
+extern motor* RMF;
+extern motor* RMB;
+extern motor* RB;
 
-extern inertial Inertial_1;
-extern inertial Inertial_2;
+extern inertial* Inertial_1;
+extern inertial* Inertial_2;
 
-extern encoder encoderX;
-extern encoder encoderY;
+extern encoder* encoderX;
+extern encoder* encoderY;
 
 void initialize_robot();

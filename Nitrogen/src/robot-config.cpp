@@ -1,32 +1,40 @@
 #include "vex.h"
+#include "robot-config.h"
 
 using namespace vex;
+
+vex::triport::port null_tport;
+uint32_t null_port;
 
 brain Brain;
 controller Controller = controller(primary);
 
-motor LF = motor(PORT7 , ratio6_1 , true);
-motor LMF = motor(PORT8 , ratio6_1 , false);
-motor LMB = motor(PORT9 , ratio6_1 , false);
-motor LB = motor(PORT10 , ratio6_1 , true);
-motor RF = motor(PORT4 , ratio6_1 , false);
-motor RMF = motor(PORT3 , ratio6_1 , true);
-motor RMB = motor(PORT2 , ratio6_1 , true);
-motor RB = motor(PORT1 , ratio6_1 , false);
+motor null_motor = motor(null_port);
+inertial null_inertial = inertial(null_port);
+encoder null_encoder = encoder(null_tport);
 
-inertial Inertial_1 = inertial(PORT5);
-inertial Inertial_2 = inertial(PORT6);
+motor* LF = &null_motor;
+motor* LMF = &null_motor;
+motor* LMB = &null_motor;
+motor* LB = &null_motor;
+motor* RF = &null_motor;
+motor* RMF = &null_motor;
+motor* RMB = &null_motor;
+motor* RB = &null_motor;
 
-encoder encoderX = encoder(Brain.ThreeWirePort.A);
-encoder encoderY = encoder(Brain.ThreeWirePort.C);
+inertial* Inertial_1 = &null_inertial;
+inertial* Inertial_2 = &null_inertial;
+
+encoder* encoderX = &null_encoder;
+encoder* encoderY = &null_encoder;
 
 void initialize_robot(){
-    Inertial_1.calibrate();
-    waitUntil(!Inertial_1.isCalibrating());
-    Inertial_2.calibrate();
-    waitUntil(!Inertial_2.isCalibrating());
-    LF.resetPosition();
-    RF.resetPosition();
-    encoderX.resetRotation();
-    encoderY.resetRotation();
+    Inertial_1->calibrate();
+    waitUntil(!Inertial_1->isCalibrating());
+    Inertial_2->calibrate();
+    waitUntil(!Inertial_2->isCalibrating());
+    LF->resetPosition();
+    RF->resetPosition();
+    encoderX->resetRotation();
+    encoderY->resetRotation();
 }

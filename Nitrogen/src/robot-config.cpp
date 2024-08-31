@@ -3,15 +3,12 @@
 
 using namespace vex;
 
-vex::triport::port null_tport;
-uint32_t null_port;
-
 brain Brain;
 controller Controller = controller(primary);
 
-motor null_motor = motor(null_port);
-inertial null_inertial = inertial(null_port);
-encoder null_encoder = encoder(null_tport);
+motor null_motor = motor(PORT1);
+inertial null_inertial = inertial(PORT1);
+encoder null_encoder = encoder(Brain.ThreeWirePort.A);
 
 motor* LF = &null_motor;
 motor* LMF = &null_motor;

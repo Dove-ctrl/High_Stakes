@@ -142,22 +142,64 @@ void elementOS(void* cpt){
     eos::controller_button page_up(eos::R1);
     eos::controller_button page_down(eos::R2);
 
-    uint32_t lf_port; uint32_t lmf_port; uint32_t lmb_port; uint32_t lb_port;
-    uint32_t rf_port; uint32_t rmf_port; uint32_t rmb_port; uint32_t rb_port;
-    uint32_t imu_1_port; uint32_t imu_2_port;
-    uint32_t coder_x_tport; uint32_t coder_y_tport;
-
     //读取端口
-    motor lf = motor(lf_port , ratio6_1 , true);
-    motor lmf = motor(lmf_port , ratio6_1 , false);
-    motor lmb = motor(lmb_port , ratio6_1 , false);
-    motor lb = motor(lb_port , ratio6_1 , true);
-    motor rf = motor(rf_port , ratio6_1 , false);
-    motor rmf = motor(rmf_port , ratio6_1 , true);
-    motor rmb = motor(rmb_port , ratio6_1 , true);
-    motor rb = motor(rb_port , ratio6_1 , false);
-    inertial inertial_1 = inertial(imu_1_port);
-    inertial inertial_2 = inertial(imu_2_port);
+    uint32_t port_array[DEVICE_NUMMER];
+    if(eos::BRAIN->SDcard.exists("port.txt")){
+        char get_char_port_array[3*DEVICE_NUMMER];
+        uint8_t get_uint8_t_buffer[3*DEVICE_NUMMER];
+        eos::BRAIN->SDcard.loadfile("port.txt" , get_uint8_t_buffer , sizeof(get_uint8_t_buffer));
+        memcpy(get_char_port_array , (char*)get_uint8_t_buffer , sizeof(get_uint8_t_buffer));
+
+        for(int i=0 ; i<3*DEVICE_NUMMER ; i++){
+            cout<<get_char_port_array[i];
+        }
+        cout<<endl<<"end"<<endl;
+        
+        char port_buffer[2];
+        int int_port; int i_pos = 0;
+        for(int j = 0 ; j<DEVICE_NUMMER ; j++){
+            for(int i=i_pos ; i<3*DEVICE_NUMMER ; i++){
+                if(get_char_port_array[i] == '#'){i_pos = i+1; break;}
+                else{ port_buffer[i-i_pos] = get_char_port_array[i]; }
+            }
+            int_port = atoi(port_buffer);
+            cout<<int_port<<" "<<endl;
+            if(int_port == 31){port_array[j] = PORT1;}
+            else if(int_port == 32){port_array[j] = PORT2;}
+            else if(int_port == 33){port_array[j] = PORT3;}
+            else if(int_port == 34){port_array[j] = PORT4;}
+            else if(int_port == 35){port_array[j] = PORT5;}
+            else if(int_port == 36){port_array[j] = PORT6;}
+            else if(int_port == 37){port_array[j] = PORT7;}
+            else if(int_port == 38){port_array[j] = PORT8;}
+            else if(int_port == 39){port_array[j] = PORT9;}
+            else if(int_port == 10){port_array[j] = PORT10;}
+            else if(int_port == 11){port_array[j] = PORT11;}
+            else if(int_port == 12){port_array[j] = PORT12;}
+            else if(int_port == 13){port_array[j] = PORT13;}
+            else if(int_port == 14){port_array[j] = PORT14;}
+            else if(int_port == 15){port_array[j] = PORT15;}
+            else if(int_port == 16){port_array[j] = PORT16;}
+            else if(int_port == 17){port_array[j] = PORT17;}
+            else if(int_port == 18){port_array[j] = PORT18;}
+            else if(int_port == 19){port_array[j] = PORT19;}
+            else if(int_port == 20){port_array[j] = PORT20;}
+            else if(int_port == 21){port_array[j] = PORT21;}
+            else {port_array[j] = 0;}
+        }
+    }//端口读取完成
+
+    motor lf = motor(port_array[0] , ratio6_1 , true);
+    motor lmf = motor(port_array[1] , ratio6_1 , false);
+    motor lmb = motor(port_array[2] , ratio6_1 , false);
+    motor lb = motor(port_array[3] , ratio6_1 , true);
+    motor rf = motor(port_array[4] , ratio6_1 , false);
+    motor rmf = motor(port_array[5] , ratio6_1 , true);
+    motor rmb = motor(port_array[6] , ratio6_1 , true);
+    motor rb = motor(port_array[7] , ratio6_1 , false);
+    inertial inertial_1 = inertial(port_array[8]);
+    inertial inertial_2 = inertial(port_array[9]);
+
     encoder encoderx = encoder(Brain.ThreeWirePort.A);
     encoder encodery = encoder(Brain.ThreeWirePort.C);
     LF = &lf;
@@ -172,6 +214,8 @@ void elementOS(void* cpt){
     Inertial_2 = &inertial_2;
     encoderX = &encoderx;
     encoderY = &encodery;
+
+    //加载配置完成
 
     while (true)//功能选择循环，两页
     {
@@ -369,8 +413,8 @@ void elementOS(void* cpt){
     case 3://driver_debug
         while (true)
         {
-            eos::ControllerPrint("yaw: " , 1 , 1);
-            eos::ControllerPrint(chassis::GetInstance().get_yaw_limit() , 1 , 6);
+            eos::ControllerPrint("yaw:" , 1 , 1);
+            eos::ControllerPrint(chassis::GetInstance().get_yaw_limit() , 1 , 7);
             eos::ControllerPrint("pos:" , 2 , 1);
             eos::ControllerPrint("电机温度:" , 3 , 1);
             eos::ControllerPrint(chassis::GetInstance().get_temperature() , 3 , 15);
@@ -395,7 +439,9 @@ void elementOS(void* cpt){
     case 5://port
         eos::ClearControllerScreen();
 
-        
+        while(true){//要更改的设备及其端口，翻页选择
+            
+        }
 
         break;
     case 6://control

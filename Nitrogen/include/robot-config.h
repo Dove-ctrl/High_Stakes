@@ -14,6 +14,7 @@ const int K_AXIS_1 = 80;
 //elementOS
 const int TIMEOUT_WRRNING = 30;
 const int TEMPERATURE_WRRNING = 50;
+const int DEVICE_NUMMER = 10;
 
 //---------------------------------------------------------------//
 extern brain Brain;

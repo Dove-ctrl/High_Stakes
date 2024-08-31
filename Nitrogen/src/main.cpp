@@ -88,11 +88,10 @@ void usercontrol(void) {
 }
 
 int main() {
-  chassis::GetInstance();
-  thread chassis(chassis_drive_thread);
-
   eos::SystemInitialize(&Brain , &Controller);
   thread main_elementOS(elementOS , &Competition);
+  chassis::GetInstance();
+  thread chassis(chassis_drive_thread);
   
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);

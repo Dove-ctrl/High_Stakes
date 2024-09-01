@@ -109,74 +109,62 @@ namespace eos
         {
         case A:
             if(CONTROLLER->ButtonA.pressing()){
-                return true;
-                waitUntil(!CONTROLLER->ButtonA.pressing());
+                waitUntil(!CONTROLLER->ButtonA.pressing());return true;
             }else{return false;}
             break;
         case B:
             if(CONTROLLER->ButtonB.pressing()){
-                return true;
-                waitUntil(!CONTROLLER->ButtonB.pressing());
+                waitUntil(!CONTROLLER->ButtonB.pressing());return true;
             }else{return false;}
             break;
         case X:
             if(CONTROLLER->ButtonX.pressing()){
-                return true;
-                waitUntil(!CONTROLLER->ButtonX.pressing());
+                waitUntil(!CONTROLLER->ButtonX.pressing());return true;
             }else{return false;}
             break;
         case Y:
             if(CONTROLLER->ButtonY.pressing()){
-                return true;
-                waitUntil(!CONTROLLER->ButtonY.pressing());
+                waitUntil(!CONTROLLER->ButtonY.pressing());return true;
             }else{return false;}
             break;
         case U:
             if(CONTROLLER->ButtonUp.pressing()){
-                return true;
-                waitUntil(!CONTROLLER->ButtonUp.pressing());              
+                waitUntil(!CONTROLLER->ButtonUp.pressing());return true;        
             }else{return false;}
             break;
         case D:
             if(CONTROLLER->ButtonDown.pressing()){
-                return true;
-                waitUntil(!CONTROLLER->ButtonDown.pressing());               
+                waitUntil(!CONTROLLER->ButtonDown.pressing());return true;               
             }else{return false;}
             break;
         case L:
             if(CONTROLLER->ButtonLeft.pressing()){
-                return true;
-                waitUntil(!CONTROLLER->ButtonLeft.pressing());        
+                waitUntil(!CONTROLLER->ButtonLeft.pressing());return true;        
             }else{return false;}
             break;
         case R:
             if(CONTROLLER->ButtonRight.pressing()){
-                return true;
-                waitUntil(!CONTROLLER->ButtonRight.pressing());               
+                waitUntil(!CONTROLLER->ButtonRight.pressing());return true;               
             }else{return false;}
             break;
         case L1:
             if(CONTROLLER->ButtonL1.pressing()){
-                return true;
-                waitUntil(!CONTROLLER->ButtonL1.pressing());               
+                waitUntil(!CONTROLLER->ButtonL1.pressing());return true;               
             }else{return false;}
             break;
         case L2:
             if(CONTROLLER->ButtonL2.pressing()){
-                return true;
-                waitUntil(!CONTROLLER->ButtonL2.pressing());                
+                waitUntil(!CONTROLLER->ButtonL2.pressing());return true;                
             }else{return false;}
             break;
         case R1:
             if(CONTROLLER->ButtonR1.pressing()){
-                return true;
-                waitUntil(!CONTROLLER->ButtonR1.pressing());                
+                waitUntil(!CONTROLLER->ButtonR1.pressing());return true;                
             }else{return false;}
             break;
         case R2:
             if(CONTROLLER->ButtonR2.pressing()){
-                return true;
-                waitUntil(!CONTROLLER->ButtonR2.pressing());                
+                waitUntil(!CONTROLLER->ButtonR2.pressing());return true;                
             }else{return false;}
             break;
         default:

@@ -8,6 +8,13 @@ char get_char_port_array[3*DEVICE_NUMMER];//储存从sdcard里面读取出来的
 uint8_t get_uint8_t_port_buffer[3*DEVICE_NUMMER];//把char类型端口号字符串转换成uint8_t类型的缓冲区备用
 int port_page = 1;
 int changed_port = 1;
+int main_page = 1;
+
+eos::op_control_button takein;
+eos::op_control_button takeout;
+eos::op_control_button armup;
+eos::op_control_button armdown;
+eos::op_control_button hook;
 
 eos::controller_button tournament(eos::U , "-联赛-");
 eos::controller_button skill(eos::L , "-技能赛-");
@@ -255,6 +262,8 @@ void elementOS(void* cpt){
         }
     }//端口读取完成
 
+    //加载配置
+
     motor lf = motor(port_array[0] , ratio6_1 , true);
     motor lmf = motor(port_array[1] , ratio6_1 , false);
     motor lmb = motor(port_array[2] , ratio6_1 , false);
@@ -283,16 +292,21 @@ void elementOS(void* cpt){
 
     //加载配置完成
 
+    //读取按键设置
+
+    
+
+    //按键设置读取完成
+
     while (true)//功能选择循环，两页
     {
-        int page = 1;
 
-        while (page != 0)
+        while (main_page != 0)
         {   
             eos::ClearControllerScreen();
-            if(page == 1){//第一页
+            if(main_page == 1){//第一页
 
-                while (page == 1)
+                while (main_page == 1)
                 {
                     tournament.Display(1 , 11);
                     skill.Display(2 , 2);
@@ -301,31 +315,31 @@ void elementOS(void* cpt){
 
                     SYSTEMINFO(eos::CONTROLLER->ButtonX);
 
-                    if(page_up.IsClicked()){page ++;}
+                    if(page_up.IsClicked()){main_page ++;}
                     
                     if(tournament.IsClicked()){
-                        if(eos::MessageBox("确认进入：" , 9 , "联赛" , 12)){PROGRAMFLAG = 1; page = 0;}
-                        else{page = 1;}
+                        if(eos::MessageBox("确认进入：" , 9 , "联赛" , 12)){PROGRAMFLAG = 1; main_page = 0;}
+                        else{main_page = 1;}
                     }
                     else if(skill.IsClicked()){
-                        if(eos::MessageBox("确认进入：" , 9 , "技能赛" , 11)){PROGRAMFLAG = 2; page = 0;}
-                        else{page = 1;}
+                        if(eos::MessageBox("确认进入：" , 9 , "技能赛" , 11)){PROGRAMFLAG = 2; main_page = 0;}
+                        else{main_page = 1;}
                     }
                     else if(driver_debug.IsClicked()){
-                        if(eos::MessageBox("确认进入：" , 9 , "手动调试" , 10)){PROGRAMFLAG = 3; page = 0;}
-                        else{page = 1;}
+                        if(eos::MessageBox("确认进入：" , 9 , "手动调试" , 10)){PROGRAMFLAG = 3; main_page = 0;}
+                        else{main_page = 1;}
                     }
                     else if(auto_debug.IsClicked()){
-                        if(eos::MessageBox("确认进入：" , 9 , "自动调试" , 10)){PROGRAMFLAG = 4; page = 0;}
-                        else{page = 1;}
+                        if(eos::MessageBox("确认进入：" , 9 , "自动调试" , 10)){PROGRAMFLAG = 4; main_page = 0;}
+                        else{main_page = 1;}
                     }
 
                     eos::SystemWait();
                 }
 
-            }else if(page == 2){//第二页
+            }else if(main_page == 2){//第二页
                 
-                while (page == 2)
+                while (main_page == 2)
                 {
                     port.Display(1 , 11);
                     control.Display(2 , 4);
@@ -334,23 +348,23 @@ void elementOS(void* cpt){
 
                     SYSTEMINFO(eos::CONTROLLER->ButtonX);
 
-                    if(page_down.IsClicked()){page --;}
+                    if(page_down.IsClicked()){main_page --;}
 
                     if(port.IsClicked()){
-                        if(eos::MessageBox("确认进入：" , 9 , "端口" , 12)){PROGRAMFLAG = 5; page = 0;}
-                        else{page = 2;}
+                        if(eos::MessageBox("确认进入：" , 9 , "端口" , 12)){PROGRAMFLAG = 5; main_page = 0;}
+                        else{main_page = 2;}
                     }
                     else if(control.IsClicked()){
-                        if(eos::MessageBox("确认进入：" , 9 , "控制" , 12)){PROGRAMFLAG = 6; page = 0;}
-                        else{page = 2;}
+                        if(eos::MessageBox("确认进入：" , 9 , "控制" , 12)){PROGRAMFLAG = 6; main_page = 0;}
+                        else{main_page = 2;}
                     }
                     else if(setting.IsClicked()){
-                        if(eos::MessageBox("确认进入：" , 9 , "设置" , 12)){PROGRAMFLAG = 7; page = 0;}
-                        else{page = 2;}
+                        if(eos::MessageBox("确认进入：" , 9 , "设置" , 12)){PROGRAMFLAG = 7; main_page = 0;}
+                        else{main_page = 2;}
                     }
                     else if(check.IsClicked()){
-                        if(eos::MessageBox("确认进入：" , 9 , "自检" , 12)){PROGRAMFLAG = 8; page = 0;}
-                        else{page = 2;}
+                        if(eos::MessageBox("确认进入：" , 9 , "自检" , 12)){PROGRAMFLAG = 8; main_page = 0;}
+                        else{main_page = 2;}
                     }
 
                     eos::SystemWait();
@@ -474,7 +488,7 @@ void elementOS(void* cpt){
         COMPETITIONINFO("BLUE-");
         break;
     case 2://skill
-        COMPETITIONINFO("skill");
+        COMPETITIONINFO("SKILL");
         break;
     case 3://driver_debug
         while (true)
@@ -611,13 +625,18 @@ void elementOS(void* cpt){
 
         eos::ControllerPrint("电量检查..." , 2 , 2);
         wait(1000,msec);
+        eos::ClearControllerLine(2);
         if(Brain.Battery.capacity() <= 60){
-            eos::ClearControllerLine(3);
             eos::ControllerPrint("电量低" , 2 , 2);
         }else{
-            eos::ClearControllerLine(3);
             eos::ControllerPrint("电量足" , 2 , 2);
         }
+        
+        eos::ClearControllerScreen();
+        eos::ControllerPrint("完成, 即将自动退出" , 2 , 3);
+        wait(3000,msec);
+        eos::ClearControllerScreen();
+        vexSystemExitRequest();
         break;
     }
     default:

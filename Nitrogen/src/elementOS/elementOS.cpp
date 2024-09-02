@@ -172,4 +172,20 @@ namespace eos
             break;
         }
     }
+
+    op_control_button::op_control_button(const controller::button* button){
+        controller_bind_button = button;
+    }
+
+    op_control_button::op_control_button(){
+        controller_bind_button = NULL;
+    }
+
+    void  op_control_button::SetBindButton(const controller::button* button){
+        controller_bind_button = button;
+    }
+
+    const controller::button* op_control_button::GetBindButton(){
+        return controller_bind_button;
+    }
 }

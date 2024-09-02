@@ -106,4 +106,25 @@ namespace eos
         /// @return 
         bool IsClicked();
     };
+
+    class op_control_button{
+    private:
+        const controller::button*          controller_bind_button;
+    public:
+
+        /// @brief 创建一个操控按键
+        /// @param bind_button 绑定的按键
+        op_control_button(const controller::button* button);
+
+        /// @brief 创建一个空操控按键
+        op_control_button();
+
+        /// @brief 设置绑定按键
+        /// @param button 需要绑定上去的按键
+        void SetBindButton(const controller::button* button);
+        
+        /// @brief 获取绑定按键
+        /// @return 绑定按键
+        const controller::button* GetBindButton();
+    };
 }

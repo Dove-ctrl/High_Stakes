@@ -8,7 +8,7 @@ const float HALF_WHEEL_DISTANCE = 17;
 const int MAX_FILTER_ERROR = 5;
 
 //op_control
-const int K_AXIS_3 = 100;
+const int K_AXIS_3 = 130;
 const int K_AXIS_1 = 80;
 
 //elementOS
